@@ -232,8 +232,8 @@ let dataOne = document.querySelector('.four__data-one'),
           return result;
         })
         .then((data) => {
-          console.log(data);
+          console.log(localStorage.getItem('data'));
         })
-        .catch(() => { console.log('error') });
+        .catch(() => { console.log(localStorage.getItem('data')) });
         }
         })        
