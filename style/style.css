@@ -1,0 +1,13 @@
+.error{
+    color: brown;
+}
+.ok{
+    color: rgb(139, 202, 37);
+}
+.new-class{
+    margin: 0 auto;
+    /* width: 150px; */
+    /* height: 200px; */
+    background: rgb(133, 118, 118);
+
+}
