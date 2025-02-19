@@ -1,4 +1,3 @@
-/*
 // Задание 1
 function fileXML() {
     const emptyParser = new DOMParser();
@@ -75,11 +74,11 @@ let taskOne = document.querySelector('.task__one')
 taskOne.addEventListener('click', function(){
     fileXML()
 })
-*/
 
 
 
-/*
+
+
 // Задание 2
 function fileJSON() {
     const JsonStringCode = `
@@ -119,11 +118,11 @@ let taskTwo = document.querySelector('.task__two')
 taskTwo.addEventListener('click', function(){
     fileJSON()
 })
-*/
 
 
 
-/*
+
+
 // Задание 3
 let formNumber = document.querySelector('.three__form-number'),
     formData = document.querySelector('.three__form-data'),
@@ -161,18 +160,18 @@ xhr.onprogress = function(event) {
 xhr.send();
     }
 })
-*/
 
 
 
-/*
+
+
 // Задание 4
-let formNumber = document.querySelector('.four__form-number'),
-    dataOne = document.querySelector('.four__data-one'),
+let dataOne = document.querySelector('.four__data-one'),
     dataTwo = document.querySelector('.four__data-two'),
     fourBtn = document.querySelector('.four__form-btn'),
     numberTitle = document.querySelector('.four__number-title'),
     numberImg = document.querySelector('.four__number-img')
+    // formNumber = document.querySelector('.four__form-number')
     
     fourBtn.addEventListener('click', function(){ // клик покнопке
         dataValueOne = Number(dataOne.value)// берём зачение value и преобразуем в число
@@ -199,7 +198,7 @@ let formNumber = document.querySelector('.four__form-number'),
     .catch(() => { console.log('error') });
     }
     })
-    */
+    
 
 
 
@@ -214,15 +213,15 @@ let formNumber = document.querySelector('.four__form-number'),
         fiveBtn.addEventListener('click', function(){ // клик покнопке
             dataValueFiveOne = Number(dataFiveOne.value)// берём зачение value и преобразуем в число
             dataValueFiveTwo = Number(dataFiveTwo.value)// берём зачение value и преобразуем в число
-            if(dataValueFiveOne < 1 || dataValueFiveOne > 10){ // если первый аргумент меньше ста, но больше трёхсот, то
+            if(dataValueFiveOne < 1 || dataValueFiveOne > 10 && dataValueFiveTwo < 1 || dataValueFiveTwo > 10){ // если второй аргумент меньше ста, но больше трёхсот, то
+                numberTitleFive.textContent = 'Номер страницы и лимит вне диапазона от 1 до 10'
+            } else if (dataValueFiveOne < 1 || dataValueFiveOne > 10){ // если первый аргумент меньше ста, но больше трёхсот, то
                 numberTitleFive.textContent = 'Номер страницы вне диапазона от 1 до 10'
             } else if (dataValueFiveTwo < 1 || dataValueFiveTwo > 10){ // если второй аргумент меньше ста, но больше трёхсот, то
                 numberTitleFive.textContent = 'Лимит вне диапазона от 1 до 10'
-            } else if (dataValueFiveOne < 1 || dataValueFiveOne > 10 && dataValueFiveTwo < 1 || dataValueFiveTwo > 10){ // если второй аргумент меньше ста, но больше трёхсот, то
-                numberTitleFive.textContent = 'Номер страницы и лимит вне диапазона от 1 до 10'
             } else { // если ппадам , то
-                numberTitleFive.textContent = `Вы ввели цифры ${dataValueFiveOne} и ${dataValueFiveTwo} - это и есть размер картинки`
-        fetch(`https://dummyimage.com/${dataValueFiveOne}x${dataValueFiveTwo}`)
+                numberTitleFive.textContent = `Вы ввели цифры ${dataValueFiveOne} и ${dataValueFiveTwo}`
+        fetch(`https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`)
         .then((response) => {
             console.log('response', response);
             const result = response.json();
