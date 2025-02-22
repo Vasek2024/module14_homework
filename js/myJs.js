@@ -1,7 +1,7 @@
 // Задание 1
 function fileXML() {
-    const emptyParser = new DOMParser();
-    const xmlStringCode = `
+    const parser = new DOMParser();
+    const xmlString = `
 <list>
     <student>
         <name lang="en">
@@ -19,56 +19,21 @@ function fileXML() {
         <age>58</age>
         <prof>driver</prof>
     </student>
-</list>`
+</list>`;
 
-    const newXmlDOM = emptyParser.parseFromString(xmlStringCode, "text/xml");
+    const xmlDOM = parser.parseFromString(xmlString, "text/xml");
+    const students = Array.from(xmlDOM.querySelectorAll("student")).map(student => {
+        const nameNode = student.querySelector("name");
+        return {
+            name: `${student.querySelector("first").textContent} ${student.querySelector("second").textContent}`,
+            age: Number(student.querySelector("age").textContent),
+            prof: student.querySelector("prof").textContent,
+            lang: nameNode.getAttribute("lang")
+        };
+    });
 
-    const xmlDOMOne = newXmlDOM.querySelector("list"),
-        studentDOMOne = xmlDOMOne.querySelectorAll("student"),
-        nameIvan = studentDOMOne[0].querySelector("name"),
-        // const firstNode = newXmlDOM.getElementsByTagName("first")[0].textContent;
-        // const secondNode = newXmlDOM.getElementsByTagName("second")[0].textContent;
-        firstIvan = studentDOMOne[0].querySelector("first"),
-        secondIvan = studentDOMOne[0].querySelector("second"),
-        ageIvan = studentDOMOne[0].querySelector("age"),
-        profIvan = studentDOMOne[0].querySelector("prof"),
-        langAttrinyteIvan = nameIvan.getAttribute('lang')
-
-    const namePetr = studentDOMOne[1].querySelector("name"),
-        // const firstNode = newXmlDOM.getElementsByTagName("first")[0].textContent;
-        // const secondNode = newXmlDOM.getElementsByTagName("second")[0].textContent;
-        firstPetr = studentDOMOne[1].querySelector("first"),
-        secondPetr = studentDOMOne[1].querySelector("second"),
-        agePetr = studentDOMOne[1].querySelector("age"),
-        profPetr = studentDOMOne[1].querySelector("prof"),
-        langAttrinytePetr = namePetr.getAttribute('lang')
-
-    resultJsIvan = {
-        // list: xmlDOMOne,
-        // student: studentDOMOne,
-        // name: nameNode.textContent,
-        name: firstIvan.textContent + " " + secondIvan.textContent,
-        age: Number(ageIvan.textContent),
-        prof: profIvan.textContent,
-        lang: langAttrinyteIvan,
-        // secon
-        // d: secondNode.textContent,
-    }
-    resultJsPetr = {
-        // list: xmlDOMOne,
-        // student: studentDOMOne,
-        // name: nameNode.textContent,
-        name: firstPetr.textContent + " " + secondPetr.textContent,
-        age: Number(agePetr.textContent),
-        prof: profPetr.textContent,
-        lang: langAttrinytePetr,
-        // secon
-        // d: secondNode.textContent,
-    }
-    console.log(resultJsIvan);
-    console.log(resultJsPetr);
+    console.log(students);
 }
-
 let taskOne = document.querySelector('.task__one')
 
 taskOne.addEventListener('click', function(){
@@ -76,50 +41,37 @@ taskOne.addEventListener('click', function(){
 })
 
 
-
-
-
 // Задание 2
 function fileJSON() {
-    const JsonStringCode = `
+    const jsonString = `
     {
-"list": [
-{
-    "name": "Petr",
-    "age": "20",
-    "prof": "mechanic"
-},
-{
-    "name": "Vova",
-    "age": "60",
-    "prof": "pilot"
-}
-]
-}`
-    const dataq = JSON.parse(JsonStringCode);
-    const list = dataq.list;
-    const petrResult = {
-        name: list[0].name,
-        age: Number(list[0].age),
-        prof: list[0].prof,
-    }
-    
-    const vovaResult = {
-        name: list[1].name,
-        age: Number(list[1].age),
-        prof: list[1].prof,
-    }
-console.log(vovaResult)
-console.log(petrResult)
-}
+ "list": [
+  {
+   "name": "Petr",
+   "age": "20",
+   "prof": "mechanic"
+  },
+  {
+   "name": "Vova",
+   "age": "60",
+   "prof": "pilot"
+  }
+ ]
+}`;
 
+    const data = JSON.parse(jsonString);
+    const result = data.list.map(person => ({
+        name: person.name,
+        age: Number(person.age),
+        prof: person.prof
+    }));
+
+    console.log(result);
+}
 let taskTwo = document.querySelector('.task__two')
-
 taskTwo.addEventListener('click', function(){
     fileJSON()
 })
-
-
 
 
 
@@ -128,8 +80,6 @@ let formNumber = document.querySelector('.three__form-number'),
     formData = document.querySelector('.three__form-data'),
     formBtn = document.querySelector('.three__form-btn'),
     formTitle = document.querySelector('.three__number-title')
-
-    // 
 formBtn.addEventListener('click', function(){ // клик покнопке
     formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
     if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
@@ -140,26 +90,74 @@ formBtn.addEventListener('click', function(){ // клик покнопке
 let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
 // делаем GET запрос с введённым аргументом
 xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
-
-// Добавляем обрабочик ответа сервера
-xhr.onload = function() {
-    if (xhr.status != 200) { // Если запрос выполнен успешно. Не 200, то
+// console.log(xhr)
+xhr.onload = function () {
+    if (xhr.status !== 200) {
         console.log('Статус ответа: ', xhr.status);
     } else {
-        // Ответ мы получаем в формате JSON, поэтому его надо распарсить
-        console.log('Результат: ', JSON.parse(xhr.response));
+        try {
+            let data = JSON.parse(xhr.response);
+            resultContainer.innerHTML = ''; 
+            data.forEach(item => {
+                let img = document.createElement('img');
+                img.src = item.thumbnailUrl;
+                img.alt = item.title;
+                img.style.margin = '5px';
+                resultContainer.appendChild(img);
+            });
+        } catch (e) {
+            console.log('Ошибка при разборе JSON:', e);
+        }
     }
 };
-
-// Добавляем обрабочик процесса загрузки
-xhr.onprogress = function(event) {
-    // Выведем прогресс загрузки
-    console.log(`Загружено ${event.loaded} из ${event.total}`)
-};
-// делаем запрос
-xhr.send();
-    }
 })
+
+
+
+
+// let formNumber = document.querySelector('.three__form-number'),
+//     formData = document.querySelector('.three__form-data'),
+//     formBtn = document.querySelector('.three__form-btn'),
+//     formTitle = document.querySelector('.three__number-title')
+// formBtn.addEventListener('click', function(){ // клик покнопке
+//     formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
+//     if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
+//         formTitle.textContent = 'Число вне диапазона от 1 до 10'
+//     } else { // если ппадам , то
+//         formTitle.textContent = `Вы ввели цифру ${formDataValue}`
+
+// let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
+// // делаем GET запрос с введённым аргументом
+// xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
+
+// // Добавляем обрабочик ответа сервера
+// xhr.onload = function() {
+//     if (xhr.status != 200) { // Если запрос выполнен успешно. Не 200, то
+//         console.log('Статус ответа: ', xhr.status);
+//     } else {
+//         // Ответ мы получаем в формате JSON, поэтому его надо распарсить
+//         console.log('Результат: ', JSON.parse(xhr.response));
+//     }
+// };
+
+// // Добавляем обрабочик процесса загрузки
+// xhr.onprogress = function(event) {
+//     // Выведем прогресс загрузки
+//     console.log(`Загружено ${event.loaded} из ${event.total}`)
+// };
+// // делаем запрос
+// xhr.send();
+//     }
+// })
+
+
+
+
+
+
+
+
+
 
 
 
