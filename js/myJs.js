@@ -76,41 +76,41 @@ taskTwo.addEventListener('click', function(){
 
 
 // Задание 3
-let formNumber = document.querySelector('.three__form-number'),
-    formData = document.querySelector('.three__form-data'),
-    formBtn = document.querySelector('.three__form-btn'),
-    formTitle = document.querySelector('.three__number-title')
-formBtn.addEventListener('click', function(){ // клик покнопке
-    formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
-    if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
-        formTitle.textContent = 'Число вне диапазона от 1 до 10'
-    } else { // если ппадам , то
-        formTitle.textContent = `Вы ввели цифру ${formDataValue}`
+// let formNumber = document.querySelector('.three__form-number'),
+//     formData = document.querySelector('.three__form-data'),
+//     formBtn = document.querySelector('.three__form-btn'),
+//     formTitle = document.querySelector('.three__number-title')
+// formBtn.addEventListener('click', function(){ // клик покнопке
+//     formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
+//     if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
+//         formTitle.textContent = 'Число вне диапазона от 1 до 10'
+//     } else { // если ппадам , то
+//         formTitle.textContent = `Вы ввели цифру ${formDataValue}`
 
-let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
-// делаем GET запрос с введённым аргументом
-xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
-// console.log(xhr)
-xhr.onload = function () {
-    if (xhr.status !== 200) {
-        console.log('Статус ответа: ', xhr.status);
-    } else {
-        try {
-            let data = JSON.parse(xhr.response);
-            resultContainer.innerHTML = ''; 
-            data.forEach(item => {
-                let img = document.createElement('img');
-                img.src = item.thumbnailUrl;
-                img.alt = item.title;
-                img.style.margin = '5px';
-                resultContainer.appendChild(img);
-            });
-        } catch (e) {
-            console.log('Ошибка при разборе JSON:', e);
-        }
-    }
-};
-})
+// let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
+// // делаем GET запрос с введённым аргументом
+// xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
+// // console.log(xhr)
+// xhr.onload = function () {
+//     if (xhr.status !== 200) {
+//         console.log('Статус ответа: ', xhr.status);
+//     } else {
+//         try {
+//             let data = JSON.parse(xhr.response);
+//             resultContainer.innerHTML = ''; 
+//             data.forEach(item => {
+//                 let img = document.createElement('img');
+//                 img.src = item.thumbnailUrl;
+//                 img.alt = item.title;
+//                 img.style.margin = '5px';
+//                 resultContainer.appendChild(img);
+//             });
+//         } catch (e) {
+//             console.log('Ошибка при разборе JSON:', e);
+//         }
+//     }
+// };
+// })
 
 
 
