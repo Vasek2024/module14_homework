@@ -76,91 +76,44 @@ taskTwo.addEventListener('click', function(){
 
 
 // Задание 3
-// let formNumber = document.querySelector('.three__form-number'),
-//     formData = document.querySelector('.three__form-data'),
-//     formBtn = document.querySelector('.three__form-btn'),
-//     formTitle = document.querySelector('.three__number-title')
-// formBtn.addEventListener('click', function(){ // клик покнопке
-//     formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
-//     if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
-//         formTitle.textContent = 'Число вне диапазона от 1 до 10'
-//     } else { // если ппадам , то
-//         formTitle.textContent = `Вы ввели цифру ${formDataValue}`
+let formNumber = document.querySelector('.three__form-number'),
+    formData = document.querySelector('.three__form-data'),
+    formBtn = document.querySelector('.three__form-btn'),
+    formTitle = document.querySelector('.three__number-title')
+    formBtn.addEventListener('click', function(){ // клик покнопке
+    formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
+if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
+    formTitle.textContent = 'Число вне диапазона от 1 до 10'
+} else { // если ппадам , то
+    formTitle.textContent = `Вы ввели цифру ${formDataValue}`
 
-// let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
-// // делаем GET запрос с введённым аргументом
-// xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
-// // console.log(xhr)
-// xhr.onload = function () {
-//     if (xhr.status !== 200) {
-//         console.log('Статус ответа: ', xhr.status);
-//     } else {
-//         try {
-//             let data = JSON.parse(xhr.response);
-//             resultContainer.innerHTML = ''; 
-//             data.forEach(item => {
-//                 let img = document.createElement('img');
-//                 img.src = item.thumbnailUrl;
-//                 img.alt = item.title;
-//                 img.style.margin = '5px';
-//                 resultContainer.appendChild(img);
-//             });
-//         } catch (e) {
-//             console.log('Ошибка при разборе JSON:', e);
-//         }
-//     }
-// };
-// })
-
-
-
-
-// let formNumber = document.querySelector('.three__form-number'),
-//     formData = document.querySelector('.three__form-data'),
-//     formBtn = document.querySelector('.three__form-btn'),
-//     formTitle = document.querySelector('.three__number-title')
-// formBtn.addEventListener('click', function(){ // клик покнопке
-//     formDataValue = Number(formData.value)// берёмзачение value и преобразуем в число
-//     if(formDataValue < 1 || formDataValue > 10){ // если меньше одного, но больше десяти, то
-//         formTitle.textContent = 'Число вне диапазона от 1 до 10'
-//     } else { // если ппадам , то
-//         formTitle.textContent = `Вы ввели цифру ${formDataValue}`
-
-// let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
-// // делаем GET запрос с введённым аргументом
-// xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
-
-// // Добавляем обрабочик ответа сервера
-// xhr.onload = function() {
-//     if (xhr.status != 200) { // Если запрос выполнен успешно. Не 200, то
-//         console.log('Статус ответа: ', xhr.status);
-//     } else {
-//         // Ответ мы получаем в формате JSON, поэтому его надо распарсить
-//         console.log('Результат: ', JSON.parse(xhr.response));
-//     }
-// };
-
-// // Добавляем обрабочик процесса загрузки
-// xhr.onprogress = function(event) {
-//     // Выведем прогресс загрузки
-//     console.log(`Загружено ${event.loaded} из ${event.total}`)
-// };
-// // делаем запрос
-// xhr.send();
-//     }
-// })
-
-
-
-
-
-
-
-
-
-
-
-
+let xhr = new XMLHttpRequest();// создаем XMLHttpRequest
+// делаем GET запрос с введённым аргументом
+xhr.open('GET', `https://jsonplaceholder.typicode.com/photos?_limit=${formDataValue}`);
+// console.log(xhr)
+xhr.onload = function () {
+    if (xhr.status !== 200) {
+        console.log('Статус ответа: ', xhr.status);
+    } else {
+        try {
+            let data = JSON.parse(xhr.response);
+            data.forEach(item => {
+                let img = document.createElement('img');
+                img.src = item.thumbnailUrl;
+                img.alt = item.title;
+                img.style.width = '150px';
+                img.style.height = '200px';
+                console.log(img)
+            });
+        } catch (e) {
+            console.log('Ошибка при разборе JSON:', e);
+        
+        }
+    }
+};
+xhr.send();
+    }
+})
 
 
 // Задание 4
@@ -171,32 +124,26 @@ let dataOne = document.querySelector('.four__data-one'),
     numberImg = document.querySelector('.four__number-img')
     // formNumber = document.querySelector('.four__form-number')
     
-    fourBtn.addEventListener('click', function(){ // клик покнопке
-        dataValueOne = Number(dataOne.value)// берём зачение value и преобразуем в число
-        dataValueTwo = Number(dataTwo.value)// берём зачение value и преобразуем в число
-        if(dataValueOne < 100 || dataValueOne > 300){ // если первый аргумент меньше ста, но больше трёхсот, то
-            numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300'
-        } else if (dataValueTwo < 100 || dataValueTwo > 300){ // если второй аргумент меньше ста, но больше трёхсот, то
-            numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300'
-        } else { // если ппадам , то
-            numberTitle.textContent = `Вы ввели цифры ${dataValueOne} и ${dataValueTwo} - это и есть размер картинки`
+fourBtn.addEventListener('click', function(){ // клик покнопке
+    dataValueOne = Number(dataOne.value)// берём зачение value и преобразуем в число
+    dataValueTwo = Number(dataTwo.value)// берём зачение value и преобразуем в число
+if(dataValueOne < 100 || dataValueOne > 300){ // если первый аргумент меньше ста, но больше трёхсот, то
+    numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300'
+} else if (dataValueTwo < 100 || dataValueTwo > 300){ // если второй аргумент меньше ста, но больше трёхсот, то
+    numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300'
+} else { // если ппадам , то
+    numberTitle.textContent = `Вы ввели цифры ${dataValueOne} и ${dataValueTwo} - это и есть размер картинки`
     fetch(`https://dummyimage.com/${dataValueOne}x${dataValueTwo}`)
-    .then((response) => {
-        console.log('response', response);
-        const result = response.json();
-        console.log('result', result);
-        numberImg.className = "new-class"
-        numberImg.style.height = `${dataValueOne}px`
-        numberImg.style.width = `${dataValueTwo}px`
-      return result;
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch(() => { console.log('error') });
+    for(let i = 1; i < dataValueOne; i++){
+        let img = document.createElement('img');
+            img.src = `https://jsonplaceholder.typicode.com/photos?_limit=${i}`
+            img.alt = `title ${i}`;
+            img.style.width = '150px';
+            img.style.height = '200px';
+            console.log(img)
     }
-    })
-    
+}
+})
 
 
 
@@ -220,18 +167,13 @@ let dataOne = document.querySelector('.four__data-one'),
             } else { // если ппадам , то
                 numberTitleFive.textContent = `Вы ввели цифры ${dataValueFiveOne} и ${dataValueFiveTwo}`
         fetch(`https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`)
-        .then((response) => {
-            console.log('response', response);
-            const result = response.json();
-            console.log('result', result);
-            numberImg.className = "new-class"
-            numberImg.style.height = `${dataValueFiveOne}px`
-            numberImg.style.width = `${dataValueFiveTwo}px`
-          return result;
-        })
-        .then((data) => {
-          console.log(localStorage.getItem('data'));
-        })
-        .catch(() => { console.log(localStorage.getItem('data')) });
+        for(let i = 1; i < dataValueFiveOne; i++){
+            let img = document.createElement('img');
+                img.src = `https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`
+                img.alt = `title ${i}`;
+                img.style.width = `${dataValueFiveOne}px`;
+                img.style.height = `${dataValueFiveTwo}px`;
+                console.log(img)
+        }
         }
         })        
