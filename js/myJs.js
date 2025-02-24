@@ -168,12 +168,17 @@ if(dataValueOne < 100 || dataValueOne > 300){ // если первый аргу�
                 numberTitleFive.textContent = `Вы ввели цифры ${dataValueFiveOne} и ${dataValueFiveTwo}`
         fetch(`https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`)
         for(let i = 1; i < dataValueFiveOne; i++){
+// как сохранить данные img в localStorage.setItem() ?
+// и выводить в консоль даже после перезагрузки брузера ?
             let img = document.createElement('img');
                 img.src = `https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`
                 img.alt = `title ${i}`;
                 img.style.width = `${dataValueFiveOne}px`;
                 img.style.height = `${dataValueFiveTwo}px`;
-                console.log(img)
+
+            localStorage.setItem('', img)
+            console.log(localStorage.getItem(''))
+            console.log(img)
         }
         }
         })        
