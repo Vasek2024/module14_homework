@@ -134,7 +134,8 @@ if(dataValueOne < 100 || dataValueOne > 300){ // если первый аргу�
 } else { // если ппадам , то
     numberTitle.textContent = `Вы ввели цифры ${dataValueOne} и ${dataValueTwo} - это и есть размер картинки`
     fetch(`https://dummyimage.com/${dataValueOne}x${dataValueTwo}`)
-    for(let i = 1; i < dataValueOne; i++){
+    
+        for(let i = 1; i < dataValueOne; i++){
         let img = document.createElement('img');
             img.src = `https://jsonplaceholder.typicode.com/photos?_limit=${i}`
             img.alt = `title ${i}`;
@@ -166,19 +167,40 @@ if(dataValueOne < 100 || dataValueOne > 300){ // если первый аргу�
                 numberTitleFive.textContent = 'Лимит вне диапазона от 1 до 10'
             } else { // если ппадам , то
                 numberTitleFive.textContent = `Вы ввели цифры ${dataValueFiveOne} и ${dataValueFiveTwo}`
-        fetch(`https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`)
-        for(let i = 1; i < dataValueFiveOne; i++){
-// как сохранить данные img в localStorage.setItem() ?
-// и выводить в консоль даже после перезагрузки брузера ?
-            let img = document.createElement('img');
-                img.src = `https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`
-                img.alt = `title ${i}`;
-                img.style.width = `${dataValueFiveOne}px`;
-                img.style.height = `${dataValueFiveTwo}px`;
+         
+        async function fetchAndStoreImages() {
+            try {
+              const response = await fetch(`https://jsonplaceholder.typicode.com/photos?_page=${dataValueFiveOne}&_limit=${dataValueFiveTwo}`)
+              const images = await response.json();
+              const imageSources = images.map(img => img.url);
+              localStorage.setItem('savedImages', JSON.stringify(imageSources));
+              console.log('Ссылки на картинки сохранены в localStorage');
+            } catch (error) {
+              console.error('Ошибка при загрузке изображений:', error);
+            }
+          }
+          
+          function loadImagesFromStorage() {
+            const savedImages = localStorage.getItem('savedImages');
+            if (savedImages) {
+              const images = JSON.parse(savedImages);
+              images.forEach((src, index) => {
+                console.log(`Картинка ${index + 1}:`, src);
+                const img = document.createElement('img');
+                img.src = src;
+                img.style.width = '100px';
+                document.body.appendChild(img);
+              });
+            } else {
+              console.log('Нет сохранённых изображений в localStorage');
+            }
+          }
+          
+          if (!localStorage.getItem('savedImages')) {
+            fetchAndStoreImages().then(() => loadImagesFromStorage());
+          } else {
+            loadImagesFromStorage();
+          }
 
-            localStorage.setItem('', img)
-            console.log(localStorage.getItem(''))
-            console.log(img)
-        }
         }
         })        
