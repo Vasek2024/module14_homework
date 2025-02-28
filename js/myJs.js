@@ -121,31 +121,29 @@ let dataOne = document.querySelector('.four__data-one'),
     dataTwo = document.querySelector('.four__data-two'),
     fourBtn = document.querySelector('.four__form-btn'),
     numberTitle = document.querySelector('.four__number-title'),
-    numberImg = document.querySelector('.four__number-img')
-    // formNumber = document.querySelector('.four__form-number')
-    
-fourBtn.addEventListener('click', function(){ // клик покнопке
-    dataValueOne = Number(dataOne.value)// берём зачение value и преобразуем в число
-    dataValueTwo = Number(dataTwo.value)// берём зачение value и преобразуем в число
-if(dataValueOne < 100 || dataValueOne > 300){ // если первый аргумент меньше ста, но больше трёхсот, то
-    numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300'
-} else if (dataValueTwo < 100 || dataValueTwo > 300){ // если второй аргумент меньше ста, но больше трёхсот, то
-    numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300'
-} else { // если ппадам , то
-    numberTitle.textContent = `Вы ввели цифры ${dataValueOne} и ${dataValueTwo} - это и есть размер картинки`
-    fetch(`https://dummyimage.com/${dataValueOne}x${dataValueTwo}`)
-    
-        for(let i = 1; i < dataValueOne; i++){
-        let img = document.createElement('img');
-            img.src = `https://jsonplaceholder.typicode.com/photos?_limit=${i}`
-            img.alt = `title ${i}`;
-            img.style.width = '150px';
-            img.style.height = '200px';
-            console.log(img)
-    }
-}
-})
+    numberImg = document.querySelector('.four__number-img');
 
+fourBtn.addEventListener('click', function () {
+    let dataValueOne = Number(dataOne.value),
+        dataValueTwo = Number(dataTwo.value);
+
+    if (dataValueOne < 100 || dataValueOne > 300 || dataValueTwo < 100 || dataValueTwo > 300) {
+        numberTitle.textContent = 'Одно из чисел вне диапазона от 100 до 300';
+    } else {
+      
+        fetch(`https://dummyimage.com/${dataValueOne}x${dataValueTwo}`)
+            .then(response => {
+                numberImg.innerHTML = ''; 
+                let img = document.createElement('img');
+                img.src = response.url; 
+                img.alt = `Картинка ${dataValueOne}x${dataValueTwo}`;
+                numberImg.appendChild(img);
+            })
+            .catch(error => {
+                console.error('Ошибка при загрузке изображения:', error);
+            });
+    }
+});
 
 
     // Задание 5
