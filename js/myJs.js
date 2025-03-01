@@ -146,6 +146,7 @@ fourBtn.addEventListener('click', function () {
 });
 
 
+
     // Задание 5
     let fiveNumber = document.querySelector('.five__form-number'),
         dataFiveOne = document.querySelector('.five__data-one'),
